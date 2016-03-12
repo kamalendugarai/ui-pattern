@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
+<style>
+	nav, ul, li {
+		margin:0;
+		padding:0;
+		list-style:none;
+	}
+	li{
+		float:left;
+		position:relative;
+	}
+	li li{
+		width:100%;
+	}
+	a, a:hover{
+		display:block;
+		background:#f3af2f none repeat scroll 0 0;
+		color:#333;
+		text-decoration:none;
+		padding:20px;
+	}
+	a:hover, li:hover > a{
+		background:#e5a121;
+	}
+	li:hover > ul{
+		display:block;
+	}
+	li ul{
+		position:absolute;
+		left:0;
+		top:100%;
+		display:none;
+	}
+		
+		
+</style>
+</head>
+
+<body>
+<nav>
+	<ul>
+    	<li><a href="google.com">Home</a></li>
+        <li><a href="google.com">About</a></li>
+        <li><a href="google.com">Drop is Here</a>
+        	<ul>
+            	<li><a href="google.com">This will not redirect you anywhere</a></li>
+                <li><a href="google.com">Home</a></li>
+                <li><a href="google.com">Home</a></li>
+                <li><a href="google.com">Home</a></li>
+            </ul>
+        </li>
+        <li><a href="google.com">Home</a></li>
+    </ul>
+</nav>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="hammer.min.js"></script>
+<script type="text/javascript" src="jquery.hammer.js"></script>
+
+<script>
+	$(function(){
+		
+
+		$("nav li").each(function(){
+			$(this).children("ul").length ? $(this).addClass('drop'):null;
+		}).promise().done(function(){
+			var tm;
+			$(".drop a").siblings("ul").css('display', "none");
+			$(".drop").hammer({ drag_lock_to_axis: true, direction: Hammer.DIRECTION_VERTICAL, drag_min_distance:1, swipe_velocity:1 }).on("swipe drag", function(event){
+				var $target = $(event.target);
+				if (event.gesture.direction == 4){
+					 $target.children("ul").stop(true, true).slideDown(function(){
+						 tm = setTimeout(function(){
+							$target.children("ul").stop(true, true).slideUp();
+						 },3000);
+					 })
+				}else{
+					$(event.target).children("ul").stop(true, true).slideUp();
+					clearInterval(tm)
+				}
+				
+			});
+			/*var hammertime = new Hammer($(".drop")[0], {swipe_velocity:0.1});
+			console.log(this);
+				hammertime.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL });
+				hammertime.on('pan', function(ev) {
+					if(ev.direction==16){
+						$(ev.target).siblings().slideDown();
+					}else{
+						$(ev.target).siblings().slideUp();
+					}
+			});*/
+
+
+			
+		});
+		/*.promise().done(function(){
+			$(".drop").on("touchmove", function(e){
+				console.log(e.originalEvent.touches, e.originalEvent.touches[0].pageY);
+			});
+			$(".drop").on("touchend", function(e){
+				//console.log(e.originalEvent.changedTouches[0].pageY);
+			});
+			$(".drop").on("touchmove", function(e){
+				//console.log(e.originalEvent.touches[0].pageY);
+			})
+		});*/
+		/*console.log("window.ondrag", window.ondrag);
+		console.log(window.navigator.userAgent.match(/mobile|phone|android|iphone/gi));
+		console.log("window.ontouchstart : ",window.ontouchstart );
+		console.log("navigator.msMaxTouchPoints > 0", navigator.msMaxTouchPoints > 0);
+		console.log("navigator.msMaxTouchPoints > 0", navigator.msMaxTouchPoints > 0);*/
+	});
+</script>
+</body>
+</html>

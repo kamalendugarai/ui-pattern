@@ -43,7 +43,25 @@
 </head>
 
 <body>
-<nav>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<nav id="superman">
 	<ul>
     	<li><a href="google.com">Home</a></li>
         <li><a href="google.com">About</a></li>
@@ -58,23 +76,7 @@
         <li><a href="google.com">Home</a></li>
     </ul>
 </nav>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
 <br />
 <br />
 <br />
@@ -115,59 +117,103 @@
 <script type="text/javascript" src="jquery.hammer.js"></script>
 
 <script>
-	$(function(){
-		
 
-		$("nav li").each(function(){
-			$(this).children("ul").length ? $(this).addClass('drop'):null;
-		}).promise().done(function(){
-			var tm;
-			$(".drop a").siblings("ul").css('display', "none");
-			$(".drop").hammer({ drag_lock_to_axis: true, direction: Hammer.DIRECTION_VERTICAL, drag_min_distance:1, swipe_velocity:1 }).on("swipe drag", function(event){
-				var $target = $(event.target);
-				if (event.gesture.direction == 4){
-					 $target.children("ul").stop(true, true).slideDown(function(){
-						 tm = setTimeout(function(){
-							$target.children("ul").stop(true, true).slideUp();
-						 },3000);
-					 })
-				}else{
-					$(event.target).children("ul").stop(true, true).slideUp();
-					clearInterval(tm)
-				}
-				
-			});
-			/*var hammertime = new Hammer($(".drop")[0], {swipe_velocity:0.1});
-			console.log(this);
-				hammertime.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL });
-				hammertime.on('pan', function(ev) {
-					if(ev.direction==16){
-						$(ev.target).siblings().slideDown();
+	;(function(defaults, $, window, document, undefined) {
+
+	'use strict';
+
+	$.extend({
+		// Function to change the default properties of the plugin
+		// Usage:
+		// jQuery.pluginSetup({property:'Custom value'});
+		pluginSetup : function(options) {
+
+			return $.extend(defaults, options);
+		}
+	}).fn.extend({
+		// Usage:
+		// jQuery(selector).pluginName({property:'value'});
+		superman : function(options) {
+
+			options = $.extend({}, defaults, options);
+			self = this;
+
+			this.wraparround(options);
+			var suggestions=[]; suggestions.length=0;
+			return $(this).find("li").each(function() {
+						suggestions.push($(this).children('a').text());
+						$(this).children("ul").length ? $(this).addClass('super_drop'):null;
+					}).promise().done(function(){
+						var tm;
+						self.searchnav(suggestions);
+						$(".super_drop a").siblings("ul").css('display', "none");
+						$(".super_drop").hammer({ drag_lock_to_axis: true, drag_min_distance:1, swipe_velocity:1 }).on("swipe drag", function(event){
+							self.dropme(event, options);
+						});
+					})
+		},
+		searchnav:function(sgs){
+			var shorted=[];
+			$("#supernav_mob nav").prepend("<input type='text' placeholder='Search navigations'>")
+			.on("keyup change", "input", function(e){
+				var inp = this;
+				shorted.length=0;
+				$("#supernav_mob nav > ul > li").each(function(i,e){
+					if($(this).children("a").text().toLowerCase().indexOf(inp.value)!=-1){
+						$(this).stop(true, true).fadeIn();
 					}else{
-						$(ev.target).siblings().slideUp();
+						$(this).stop(true, true).fadeOut();
 					}
-			});*/
-
-
+				});
+			});
 			
-		});
-		/*.promise().done(function(){
-			$(".drop").on("touchmove", function(e){
-				console.log(e.originalEvent.touches, e.originalEvent.touches[0].pageY);
-			});
-			$(".drop").on("touchend", function(e){
-				//console.log(e.originalEvent.changedTouches[0].pageY);
-			});
-			$(".drop").on("touchmove", function(e){
-				//console.log(e.originalEvent.touches[0].pageY);
-			})
-		});*/
-		/*console.log("window.ondrag", window.ondrag);
-		console.log(window.navigator.userAgent.match(/mobile|phone|android|iphone/gi));
-		console.log("window.ontouchstart : ",window.ontouchstart );
-		console.log("navigator.msMaxTouchPoints > 0", navigator.msMaxTouchPoints > 0);
-		console.log("navigator.msMaxTouchPoints > 0", navigator.msMaxTouchPoints > 0);*/
+		},
+		dropme:function(ev, options){
+			var tm;
+			var $target = $(ev.target);
+			//console.log(ev.gesture);
+					if (ev.gesture && ev.gesture.direction == 4){
+						 $target.children("ul").stop(true, true).slideDown(function(){
+						 	$(this).css("display","block").addClass('super_drop_opened');
+							 tm = setTimeout(function(){
+								$target.children("ul").stop(true, true).slideUp(function(){
+									$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
+								});
+							 },options.slideUpTime);
+						 })
+					}else{
+						$(ev.target).children("ul").stop(true, true).slideUp(function(){
+							$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
+						});
+						clearInterval(tm);
+					}
+		},
+		wraparround : function(options) {
+			var $supernav_mob = $(this).clone().filter('nav');
+
+			$("body").wrapInner("<div class='super_wrapper' id='super_wrapper'/>").prepend("<div id='supernav_mob'>");
+			$("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
+		}
 	});
+})({
+	property : "value",
+	otherProperty : "value"
+}, jQuery, window, document);
+
+
+$(function(){
+	$("#superman").superman({slideUpTime:3000, subMenuSlide:"vertical"});
+})
+
+
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

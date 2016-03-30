@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
+<style>
+	nav, ul, li {
+		margin:0;
+		padding:0;
+		list-style:none;
+	}
+	li{
+		float:left;
+		position:relative;
+	}
+	li li{
+		width:100%;
+	}
+	a, a:hover{
+		display:block;
+		background:#f3af2f none repeat scroll 0 0;
+		color:#333;
+		text-decoration:none;
+		padding:20px;
+	}
+	a:hover, li:hover > a{
+		background:#e5a121;
+	}
+	li:hover > ul{
+		display:block;
+	}
+	li ul{
+		position:absolute;
+		left:0;
+		top:100%;
+		display:none;
+	}
+	.super_drop:after{
+		content:'';
+		width:32px;
+		height:32px;
+		display: block;
+		position:absolute;
+		left:0;
+		bottom:0;
+		opacity:0.5;
+		background:url(slide_right.png) left top no-repeat;
+		-webkit-animation: myanim 1s infinite; 
+          animation: myanim 1s infinite;
+	}
+	
+	@-webkit-keyframes myanim {
+	  0%   { left: 0; }
+	  90%  { left: 100%; }
+	  100% { left: 0; }
+	}
+	@keyframes myanim {
+	  0%   { left: 0; }
+	  90%  { left: 100%; }
+	  100% { left: 0; }
+	}
+		
+</style>
+</head>
+
+<body>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<nav id="superman">
+	<ul>
+    	<li><a href="google.com">Home</a></li>
+        <li><a href="google.com">About</a></li>
+        <li><a href="google.com">Drop is Here</a>
+        	<ul>
+            	<li><a href="google.com">This will not redirect you anywhere</a></li>
+                <li><a href="google.com">Home</a></li>
+                <li><a href="google.com">Home</a></li>
+                <li><a href="google.com">Home</a></li>
+            </ul>
+        </li>
+        <li><a href="google.com">Home</a></li>
+    </ul>
+</nav>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="hammer.min.js"></script>
+<script type="text/javascript" src="jquery.hammer.js"></script>
+
+<script>
+
+	;(function(defaults, $, window, document, undefined) {
+
+	'use strict';
+
+	$.extend({
+		// Function to change the default properties of the plugin
+		// Usage:
+		// jQuery.pluginSetup({property:'Custom value'});
+		pluginSetup : function(options) {
+
+			return $.extend(defaults, options);
+		}
+	}).fn.extend({
+		// Usage:
+		// jQuery(selector).pluginName({property:'value'});
+		superman : function(options) {
+
+			options = $.extend({}, defaults, options);
+			self = this;
+
+			this.wraparround(options);
+			var suggestions=[]; suggestions.length=0;
+			return $(this).find("li").each(function() {
+						suggestions.push($(this).children('a').text());
+						$(this).children("ul").length ? $(this).addClass('super_drop'):null;
+					}).promise().done(function(){
+						var tm;
+						self.searchnav(suggestions);
+						$(".super_drop a").siblings("ul").css('display', "none");
+						$(".super_drop").hammer({ drag_lock_to_axis: true, drag_min_distance:1, swipe_velocity:1 }).on("swipe drag", function(event){
+							self.dropme(event, options);
+						});
+					})
+		},
+		searchnav:function(sgs){
+			var shorted=[];
+			$("#supernav_mob nav").prepend("<input type='text' placeholder='Search navigations'>")
+			.on("keyup change", "input", function(e){
+				var inp = this;
+				shorted.length=0;
+				$("#supernav_mob nav > ul > li").each(function(i,e){
+					if($(this).children("a").text().toLowerCase().indexOf(inp.value)!=-1){
+						$(this).stop(true, true).fadeIn();
+					}else{
+						$(this).stop(true, true).fadeOut();
+					}
+				});
+			});
+			
+		},
+		dropme:function(ev, options){
+			var tm;
+			var $target = $(ev.target);
+			//console.log(ev.gesture);
+					if (ev.gesture && ev.gesture.direction == 4){
+						 $target.children("ul").stop(true, true).slideDown(function(){
+						 	$(this).css("display","block").addClass('super_drop_opened');
+							 tm = setTimeout(function(){
+								$target.children("ul").stop(true, true).slideUp(function(){
+									$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
+								});
+							 },options.slideUpTime);
+						 })
+					}else{
+						$(ev.target).children("ul").stop(true, true).slideUp(function(){
+							$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
+						});
+						clearInterval(tm);
+					}
+		},
+		wraparround : function(options) {
+			var $supernav_mob = $(this).clone().filter('nav');
+
+			$("body").wrapInner("<div class='super_wrapper' id='super_wrapper'/>").prepend("<div id='supernav_mob'>");
+			$("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
+		}
+	});
+})({
+	property : "value",
+	otherProperty : "value"
+}, jQuery, window, document);
+
+
+$(function(){
+	$("#superman").superman({slideUpTime:3000, subMenuSlide:"vertical"});
+})
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

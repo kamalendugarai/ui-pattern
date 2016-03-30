@@ -47,8 +47,8 @@
 		bottom:0;
 		opacity:0.5;
 		background:url(slide_right.png) left top no-repeat;
-		-webkit-animation: myanim 5s infinite; 
-          animation: myanim 5s infinite;
+		-webkit-animation: myanim 1s infinite; 
+          animation: myanim 1s infinite;
 	}
 	
 	@-webkit-keyframes myanim {
@@ -57,9 +57,9 @@
 	  100% { left: 0; }
 	}
 	@keyframes myanim {
-	  0%   { opacity: 0.0; }
-	  50%  { opacity: 0.5; }
-	  100% { opacity: 1.0; }
+	  0%   { left: 0; }
+	  90%  { left: 100%; }
+	  100% { left: 0; }
 	}
 		
 </style>

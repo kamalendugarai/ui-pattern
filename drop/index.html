@@ -292,8 +292,8 @@
 			var suggestions=[]; suggestions.length=0;
             var $li;
 			return $li = $(this).find("li").each(function() {
-						suggestions.push($(this).clone()[0]);
 						$(this).children("ul").length ? $(this).addClass('super_drop'):null;
+						suggestions.push($(this).clone()[0]);
 					}).promise().done(function($li){
 						var tm;
 						self.searchnav(suggestions);

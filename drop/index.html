@@ -359,6 +359,7 @@
 			//console.log(ev.gesture);
             //console.log(ev.target);
 					if (ev.gesture && ev.gesture.direction == 4){
+						console.log(this, options);
 						 $target.stop(true, true).slideDown(function(){
 						 	$(this).css("display","block").addClass('super_drop_opened');
                              $target_parent.prevAll().addClass('super_fold');
@@ -383,6 +384,7 @@
 					}
 		},
 		wraparround : function(options) {
+			console.log(options)
 			var $supernav_mob = $(this).clone().filter('nav');
 			$("body").wrapInner("<div class='super_wrapper' id='super_wrapper'/>").prepend("<div id='supernav_mob'>");
 			$("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
@@ -396,7 +398,7 @@
 
 
 $(function(){
-	$("#superman").superman({slideUpTime:10000, subMenuSlide:"vertical"});
+	$("#superman").superman({slideUpTime:10000, subMenuSlide:"vertical", });
 })
 
 

@@ -386,7 +386,7 @@
 					}
 		},
 		wraparround : function(options) {
-			$(options.subControlButton).prepend("<span id='superman_nav_clicker'>E</span"))
+			$(options.subControlButton).prepend("<span id='superman_nav_clicker'>E</span>");
 			var $supernav_mob = $(this).clone().filter('nav');
 			$("body").wrapInner("<div class='super_wrapper' id='super_wrapper'/>").prepend("<div id='supernav_mob'>");
 			$("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
@@ -402,6 +402,9 @@
 $(function(){
 	$("#superman").superman({slideUpTime:10000, subMenuSlide:"vertical", subControlButton:"body"});
 })
+
+
+
 
 
 </script>

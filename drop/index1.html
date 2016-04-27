@@ -298,10 +298,9 @@
 						var tm;
 						self.searchnav(suggestions, options);
                         self.ripple($li);
-						//self.swipe(options);
-						console.log('')
 					});
 			this.wraparround(options);
+			self.swipe(options);
 			return $li;
             
 		},
@@ -353,7 +352,7 @@
 					}
 				})
 			});
-			self.swipe(options);
+			//self.swipe(options);
 		},
 		collpaser:function(target, target_parent){
 			target.stop(true, true).slideUp(function(){

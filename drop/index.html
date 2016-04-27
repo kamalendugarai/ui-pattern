@@ -25,7 +25,6 @@
 	li li{
 		width:100%;
 	}
-	
 	a, a:hover{
 		display:block;
 		background:#ED9F03 none repeat scroll 0 0;
@@ -357,6 +356,9 @@
                 target_parent.find('.super_fold').removeClass('super_fold');
 			});
 		},
+		opener:function(){
+
+		},
 		dropme:function(ev, options){
             ev.stopPropagation();
             ev.preventDefault();
@@ -373,12 +375,6 @@
 
 							 tm = setTimeout(function(){
 							 		self.collpaser($target, $target_parent);
-                                // console.log($target.children("ul"))
-								/*$target.stop(true, true).slideUp(function(){
-									$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
-                                    $target_parent.prevAll().removeClass('super_fold');
-                                    $target_parent.find('.super_fold').removeClass('super_fold');
-								});*/
 							 },options.slideUpTime);
 						 })
 					}else{

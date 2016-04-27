@@ -6,27 +6,35 @@
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
 <style>
+    body{
+        background:#2B2F3A;
+    }
 	nav, ul, li {
 		margin:0;
 		padding:0;
 		list-style:none;
 	}
-	li{
+	nav li{
 		float:left;
 		position:relative;
 	}
+    nav li ul{
+        background:#ED9F03;
+        box-shadow: 0 0 5px #E95710;
+    }
 	li li{
 		width:100%;
 	}
 	a, a:hover{
 		display:block;
-		background:#f3af2f none repeat scroll 0 0;
+		background:#ED9F03 none repeat scroll 0 0;
 		color:#333;
 		text-decoration:none;
 		padding:20px;
 	}
 	a:hover, li:hover > a{
-		background:#e5a121;
+		background:#E95710;
+        color:#fff;
 	}
 	li:hover > ul{
 		display:block;
@@ -37,31 +45,85 @@
 		top:100%;
 		display:none;
 	}
-	.super_drop:after{
-		content:'';
-		width:32px;
-		height:32px;
-		display: block;
-		position:absolute;
-		left:0;
-		bottom:0;
-		opacity:0.5;
-		background:url(slide_right.png) left top no-repeat;
-		-webkit-animation: myanim 5s infinite; 
-          animation: myanim 5s infinite;
-	}
+    
+    .super_ripple{
+        border-radius: 50%;
+        -o-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        background: #fff;
+        transform-origin: 50% 50%;
+        -webkit-transform-origin: 50% 50%;
+        width:1px; height:1px;
+        position: absolute;
+        opacity: 0.7;
+        z-index: 1;
+    }
+    .super_drop{
+    }
+    .super_drop a{
+        z-index:2;
+    }
+    .super_ripple_animate{
+        -webkit-animation:ripple 1s forwards;
+        animation:ripple 1s forwards;
+    }
+    @keyframes ripple{
+        100%{opacity:0; transform: scale(70)}
+    }
+    @-webkitkeyframes ripple{
+        
+        100%{opacity:0; -webkit-transform: scale(70)}
+    }
+    .super_drop::after {
+  animation: 2s ease 0s normal none infinite running myanim;
+  //background: #333 none repeat scroll 0 0;
+        border-bottom:1px dashed #333;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 1px;
+  left: 0;
+  opacity: 0.5;
+  position: absolute;
+  width: 30px;
+        -webkit-animation: slide_left 2s infinite; 
+          animation: slide_left 2s infinite;
+}
 	
-	@-webkit-keyframes myanim {
-	  0%   { left: 0; }
-	  90%  { left: 100%; }
-	  100% { left: 0; }
+	@-webkit-keyframes slide_left {
+	  0%   { left: 0;opacity:1 }
+        60%{opacity:0}
+	  100%  { left: 100%; }
 	}
-	@keyframes myanim {
-	  0%   { opacity: 0.0; }
-	  50%  { opacity: 0.5; }
-	  100% { opacity: 1.0; }
+	@keyframes slide_left {
+	  0%   { left: 0;opacity:1 }
+        60%{opacity:0}
+	  100%  { left: 100%;opacity:0 }
 	}
-		
+    li{
+        transition:all ease-in-out 600ms;
+        -o-transition:all ease-in-out 600ms;
+        -ms-transition:all ease-in-out 600ms;
+        -moz-transition:all ease-in-out 600ms;
+        -webkit-transition:all ease-in-out 600ms;
+        transform-style: preserve-3d;
+        height:60px;
+        
+        
+    }
+    li li.super_fold:nth-child(even){
+        transform:perspective(800px) rotateX(90deg);
+        transform-origin: top 0;
+        height:0;
+    }
+    li li.super_fold:nth-child(odd){
+        transform:perspective(800px) rotateX(-90deg);
+        transform-origin: bottom 0;
+        height:0;
+    }
+    
 </style>
 </head>
 
@@ -87,19 +149,32 @@
 <nav id="superman">
 	<ul>
     	<li><a href="google.com">Home</a></li>
-        <li><a href="google.com">About</a></li>
-        <li><a href="google.com">Drop is Here</a>
-        	<ul>
+        <li><a href="google.com">About</a>
+            <ul>
             	<li><a href="google.com">This will not redirect you anywhere</a></li>
                 <li><a href="google.com">Home</a></li>
                 <li><a href="google.com">Home</a></li>
                 <li><a href="google.com">Home</a></li>
             </ul>
         </li>
+        <li><a href="google.com">Drop is Here</a>
+        	<ul>
+            	<li><a href="google.com">This will not redirect you anywhere</a></li>
+                <li><a href="google.com">Home</a></li>
+                <li><a href="google.com">Home</a>
+                    <ul>
+                        <li><a href="google.com">This will not redirect you anywhere</a></li>
+                        <li><a href="google.com">Home</a></li>
+                        <li><a href="google.com">Home</a></li>
+                        <li><a href="google.com">Home</a></li>
+                    </ul>
+                </li>
+                <li><a href="google.com">Home</a></li>
+            </ul>
+        </li>
         <li><a href="google.com">Home</a></li>
     </ul>
 </nav>
-
 <br />
 <br />
 <br />
@@ -114,12 +189,63 @@
 <br />
 <br />
 <br />
+<br /><br />
 <br />
 <br />
 <br />
 <br />
 <br />
 <br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /><br />
 <br />
 <br />
 <br />
@@ -136,6 +262,7 @@
 <br />
 
 <script type="text/javascript" src="jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="hammer.min.js"></script>
 <script type="text/javascript" src="jquery.hammer.js"></script>
 
@@ -163,59 +290,103 @@
 
 			this.wraparround(options);
 			var suggestions=[]; suggestions.length=0;
-			return $(this).find("li").each(function() {
-						suggestions.push($(this).children('a').text());
+            var $li;
+			return $li = $(this).find("li").each(function() {
+						suggestions.push($(this).clone()[0]);
 						$(this).children("ul").length ? $(this).addClass('super_drop'):null;
-					}).promise().done(function(){
+					}).promise().done(function($li){
 						var tm;
 						self.searchnav(suggestions);
+                        self.ripple($li);
 						$(".super_drop a").siblings("ul").css('display', "none");
-						$(".super_drop").hammer({ drag_lock_to_axis: true, drag_min_distance:1, swipe_velocity:1 }).on("swipe drag", function(event){
+						$(".super_drop a").hammer({ drag_lock_to_axis: true, drag_min_distance:1, swipe_velocity:1 }).on("swipe", function(event){
 							self.dropme(event, options);
 						});
-					})
+					});
+            
 		},
+        ripple:function($li){
+            /*$($li).click(function(e){
+               // e.preventDefault();
+                var $this = $(this);
+                var effective_size;
+                var tw = $this.width();
+                var th = $this.height();
+                !$this.children('.super_ripple').length?$this.append('<span class="super_ripple"></span>'):$this.children('.super_ripple').removeClass('super_ripple_animate');
+                tw>th?effective_size=tw:effective_size=th;
+                $this.find('.super_ripple').css({left:Math.floor(e.pageX - $this.offset().left), top:Math.floor(e.pageY - $this.offset().top)}).addClass('super_ripple_animate');
+            })
+            return;*/
+        },
 		searchnav:function(sgs){
+			var self = this.options;
+			console.log(sgs);
 			var shorted=[];
-			$("#supernav_mob nav").prepend("<input type='text' placeholder='Search navigations'>")
+			var $supernav = $("#supernav_mob nav");
+			$supernav.prepend("<input type='text' placeholder='Search navigation'>")
 			.on("keyup change", "input", function(e){
 				var inp = this;
 				shorted.length=0;
-				$("#supernav_mob nav > ul > li").each(function(i,e){
-					if($(this).children("a").text().toLowerCase().indexOf(inp.value)!=-1){
-						$(this).stop(true, true).fadeIn();
-					}else{
-						$(this).stop(true, true).fadeOut();
+				$(sgs).each(function(i,e){
+					//console.log($(this).find("a").text().toLowerCase().indexOf(inp.value), inp.value.length);
+					if($(this).children("a").text().toLowerCase().indexOf(inp.value)!=-1 && inp.value.length){
+						//$(this).stop(true, true).fadeIn();
+						var $li = $(this).clone();
+							$li.children("ul").remove();
+						shorted.push($li[0]);
 					}
-				});
+				}).promise().then(function(){
+					
+					if(shorted.length > 0){
+						$supernav.children('ul').fadeOut();
+						$("#super_search").html(shorted).fadeIn();
+					}else{
+						$supernav.children('ul').fadeIn();
+						$("#super_search").fadeOut(function(){$(this).html('')});
+
+					}
+				})
 			});
 			
 		},
 		dropme:function(ev, options){
+            ev.stopPropagation();
+            ev.preventDefault();
 			var tm;
-			var $target = $(ev.target);
+			var $target = $(ev.target).next();
+            var $target_parent = $target.parent();
+            clearInterval(tm);
 			//console.log(ev.gesture);
+            //console.log(ev.target);
 					if (ev.gesture && ev.gesture.direction == 4){
-						 $target.children("ul").stop(true, true).slideDown(function(){
+						 $target.stop(true, true).slideDown(function(){
 						 	$(this).css("display","block").addClass('super_drop_opened');
+                             $target_parent.prevAll().addClass('super_fold');
+                             $target_parent.find('.super_fold').removeClass('super_fold');
+
 							 tm = setTimeout(function(){
-								$target.children("ul").stop(true, true).slideUp(function(){
+                                // console.log($target.children("ul"))
+								$target.stop(true, true).slideUp(function(){
 									$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
+                                    $target_parent.prevAll().removeClass('super_fold');
+                                    $target_parent.find('.super_fold').removeClass('super_fold');
 								});
 							 },options.slideUpTime);
 						 })
 					}else{
-						$(ev.target).children("ul").stop(true, true).slideUp(function(){
+						$target_parent.find('ul').stop(true, true).slideUp(function(){
 							$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
+                            $target_parent.prevAll().removeClass('super_fold');
+                            $target_parent.prevAll().removeClass('super_fold');
 						});
 						clearInterval(tm);
 					}
 		},
 		wraparround : function(options) {
 			var $supernav_mob = $(this).clone().filter('nav');
-
 			$("body").wrapInner("<div class='super_wrapper' id='super_wrapper'/>").prepend("<div id='supernav_mob'>");
 			$("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
+			$("#supernav_mob").append('<ul id="super_search"/>');
 		}
 	});
 })({
@@ -225,7 +396,7 @@
 
 
 $(function(){
-	$("#superman").superman({slideUpTime:3000, subMenuSlide:"vertical"});
+	$("#superman").superman({slideUpTime:100000, subMenuSlide:"vertical"});
 })
 
 

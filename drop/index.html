@@ -349,28 +349,34 @@
 			});
 			
 		},
+		collpaser:function(target, target_parent){
+			target.stop(true, true).slideUp(function(){
+				$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
+                target_parent.prevAll().removeClass('super_fold');
+                target_parent.find('.super_fold').removeClass('super_fold');
+			});
+		},
 		dropme:function(ev, options){
             ev.stopPropagation();
             ev.preventDefault();
+            var self = this;
 			var tm;
 			var $target = $(ev.target).next();
             var $target_parent = $target.parent();
-            clearInterval(tm);
-			//console.log(ev.gesture);
-            //console.log(ev.target);
+            	clearInterval(tm);
 					if (ev.gesture && ev.gesture.direction == 4){
-						console.log(this, options);
 						 $target.stop(true, true).slideDown(function(){
 						 	$(this).css("display","block").addClass('super_drop_opened');
                              $target_parent.prevAll().addClass('super_fold');
                              $target_parent.find('.super_fold').removeClass('super_fold');
 
 							 tm = setTimeout(function(){
+							 		self.collpaser($target, $target_parent);
                                 // console.log($target.children("ul"))
-								$target.stop(true, true).slideUp(function(){
+								/*$target.stop(true, true).slideUp(function(){
 									$(this).css("display","none").removeClass('super_drop_opened').addClass('super_drop_closed');
                                     $target_parent.prevAll().removeClass('super_fold');
-                                    $target_parent.find('.super_fold').removeClass('super_fold');
+                                    $target_parent.find('.super_fold').removeClass('super_fold');*/
 								});
 							 },options.slideUpTime);
 						 })
@@ -395,6 +401,7 @@
 	property : "value",
 	otherProperty : "value"
 }, jQuery, window, document);
+
 
 $(function(){
 	$("#superman").superman({slideUpTime:10000, subMenuSlide:"vertical", });

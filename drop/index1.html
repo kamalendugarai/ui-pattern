@@ -319,6 +319,7 @@
 		},
 		respdrop:function(options){
 			$('.resp_super_drop').on('click', 'i', function(e){
+				$(this).toggleClass('super_closed super_opened');
 				$(this).prev().slideToggle(function(){
 					$(this).is(":visible")?$(this).css('display','block'):null;
 					

@@ -110,8 +110,6 @@
         -webkit-transition:all ease-in-out 600ms;
         transform-style: preserve-3d;
         height:60px;
-        
-        
     }
     li li.super_fold:nth-child(even){
         transform:perspective(800px) rotateX(90deg);
@@ -122,6 +120,19 @@
         transform:perspective(800px) rotateX(-90deg);
         transform-origin: bottom 0;
         height:0;
+    }
+    .resp_super_drop{
+    	padding-right:30px;
+    	background:#ed9f03;
+    }
+    .resp_super_drop i{
+    	position:absolute;
+    	right:0;
+    	top:0;
+    	bottom:0;
+    	width:30px;
+    	background: #666;
+    	cursor:pointer;
     }
     
 </style>
@@ -297,12 +308,23 @@
 					}).promise().done(function($li){
 						var tm;
 						self.searchnav(suggestions, options);
-                        self.ripple($li);
+                        //self.ripple($li);
 					});
-			this.wraparround(options);
+			self.wraparround(options);
 			self.swipe(options);
+			self.respdrop(options);
+
 			return $li;
             
+		},
+		respdrop:function(options){
+			$('.resp_super_drop').on('click', 'i', function(e){
+				$(this).prev().slideToggle(function(){
+					$(this).is(":visible")?$(this).css('display','block'):null;
+					
+				});
+				return false;
+			})
 		},
 		swipe:function(options){
 			var self = this;
@@ -395,9 +417,16 @@
 			var self = this;
 			$(options.controlButton).prepend("<span id='superman_nav_clicker'>E</span>");
 			var $supernav_mob = $(this).clone().filter('nav');
-			console.log($(this).clone());
 			$("body").wrapInner("<div class='super_wrapper' id='super_wrapper'/>").prepend("<div id='supernav_mob'>");
-			$("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
+			if(options.slideForResponsive){
+				console.log('hmm')
+				$("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
+			}else{
+
+				var $na = $("#supernav_mob").prepend($supernav_mob).find("nav").removeAttr("id");
+					$na = $na.find(".super_drop").toggleClass('super_drop resp_super_drop');
+					$na.append('<i class="super_closed"></i>').children('ul').css('display','none');
+			}
 			$("#supernav_mob").append('<ul id="super_search"/>');
 		}
 	});
@@ -408,7 +437,7 @@
 
 
 $(function(){
-	$("#superman").superman({slideUpTime:10000, subMenuSlide:"vertical", controlButton:"body"});
+	$("#superman").superman({slideUpTime:10000, subMenuSlide:"vertical", controlButton:"body", slideForResponsive:false});
 })
 
 
